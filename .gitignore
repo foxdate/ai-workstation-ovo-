@@ -1,0 +1,35 @@
+# 本地保存的 API 配置（含 Key），勿提交
+api_config.json
+
+# 与 Cursor 联动：导出状态与工作区拓展代码（可含对话内容）
+zhiquan_workspace/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+.venv/
+env/
+.eggs/
+*.egg-info/
+
+# 打包与构建产物
+dist/
+build/
+*.spec.bak
+
+# 环境变量与密钥文件（若后续使用）
+.env
+.env.*
+!.env.example
+
+# 日志与系统杂项
+*.log
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# 可选：本地对话总结（若不希望提交个人内容，取消下一行注释）
+# memory_store/chat_summaries.txt

@@ -1,0 +1,17 @@
+{
+  "apps": [
+    {
+      "id": "cursor",
+      "name": "Cursor / 本助手",
+      "description": "在 Cursor 中打开本项目，AI 可读取OVO状态并写入拓展代码，实现与OVO的平滑切换。",
+      "icon": "🖥️",
+      "workspaceFolder": "zhiquan_workspace",
+      "actions": [
+        { "id": "export_state", "label": "导出状态到工作区", "type": "api", "api": "export_state" },
+        { "id": "collect_computer", "label": "采集本机状态", "type": "api", "api": "collect_computer_state" },
+        { "id": "open_in_app", "label": "复制项目路径（在 Cursor 中打开）", "type": "copy_project_path" },
+        { "id": "load_extension", "label": "从工作区加载并运行", "type": "load_workspace_file", "inputKey": "workspaceFileName", "buttonKey": "loadWorkspaceBtn" }
+      ]
+    }
+  ]
+}

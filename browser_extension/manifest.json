@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "OVO - 推送到本地",
+  "version": "1.0",
+  "description": "将当前页面 URL、标题与正文推送到本机OVO（127.0.0.1:8888），供 AI 读取。",
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "推送到OVO"
+  }
+}

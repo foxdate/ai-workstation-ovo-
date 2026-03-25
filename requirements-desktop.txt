@@ -1,0 +1,13 @@
+# 桌面版依赖（运行 desktop_app.py 或打包 exe 时需要）
+#
+# 方式一（推荐，若安装成功）：
+#   pip install pywebview
+#
+# 若报错 "Failed building wheel for pythonnet"：
+# 方式二：改用 CEF 后端（不依赖 pythonnet）
+#   pip install pywebview[cef]
+# 安装后桌面版会使用 CEF 内嵌窗口。
+#
+# 若仍安装失败：可直接「启动.bat」选 2，程序会自动用默认浏览器打开页面，
+# 功能与内嵌窗口一致，仅窗口独立为浏览器标签。
+pywebview>=4.0
