@@ -1,16 +1,10 @@
 # OVO
 
-**AI 工作站** — 接入多个 AI 软件与模型，**重点在对话互通**：把 A 软件的对话给 B 软件用，在OVO内换模型继续聊。多模型统一入口，支持自主 API、插件、会议模式与自我拓展。
+个人 **AI 工作站**：多模型统一入口，**核心是对话互通**——把 A 软件的对话导出为 JSON，导入到 OVO 或其它软件，在 OVO 内换模型继续同一段对话。支持页面内 API 接入、LiteLLM 网关、插件、会议模式与 Cursor 联动等。
 
-**👉 对话互通：** [docs/13-对话互通.md](docs/13-对话互通.md)（导出/导入对话，A↔B 互通）  
-**👉 发给别人安装：** [docs/打包与发布清单.md](docs/打包与发布清单.md) · 对方解压后读 [首次安装指引.md](首次安装指引.md)  
-**安装总结：** [docs/安装总结.md](docs/安装总结.md) · **完整安装：** [docs/00-详细安装与使用教程.md](docs/00-详细安装与使用教程.md) · **免费 API：** [docs/免费API获取与接入.md](docs/免费API获取与接入.md)
+**文档：** [对话互通](docs/13-对话互通.md) · [打包分发](docs/打包与发布清单.md) / [首次安装指引](首次安装指引.md) · [安装总结](docs/安装总结.md) · [完整教程](docs/00-详细安装与使用教程.md) · [免费 API](docs/免费API获取与接入.md)
 
 ---
-
-## 项目介绍
-
-OVO定位为** AI 工作站**：接入多种 AI 软件与模型（API、插件、会议等），**核心能力是对话内容互通**——将某处的对话导出为标准 JSON，导入到OVO或其他软件，实现「把 A 的对话给 B」、在OVO内换 AI 继续同一段对话。基于 Open WebUI + LiteLLM，支持多模型统一入口与自主 API/插件接入。
 
 ## 一键启动（需已安装 Docker）
 
@@ -31,72 +25,36 @@ docker run -d -p 3000:8080 --name open-webui \
 
 ## 接入 API
 
-- **方式一（页面内）**：启动OVO后，在左侧栏 **「API 接入」** 填写 **API 地址**（如 `https://api.deepseek.com/v1`）和 **API Key**，点「保存」即可；模型列表会自动从该接口拉取，对话走该 API。
-- **方式二（LiteLLM 统一网关）**：在 `litellm/config.yaml` 中为各模型配置 `api_key`，再运行「启动.bat」选 3 启动 LiteLLM，页面留空 API 地址即走本地代理。适合多模型、多 Key 统一管理。
-- **免费 API 来源**：见 [docs/免费API获取与接入.md](docs/免费API获取与接入.md)；Key 配置细节见 [docs/05-API-Key-配置说明.md](docs/05-API-Key-配置说明.md)。
+- **方式一（页面内）**：启动 OVO 后，在左侧栏 **「API 接入」** 填写 **API 地址**（如 `https://api.deepseek.com/v1`）和 **API Key**，点「保存」；模型列表从该接口拉取，对话走该 API。
+- **方式二（LiteLLM 网关）**：在 `litellm/config.yaml` 中配置各模型 `api_key`，运行「启动.bat」选 3 启动 LiteLLM，页面留空 API 地址即走本地代理。
+- **免费 API 来源**：[docs/免费API获取与接入.md](docs/免费API获取与接入.md)；Key 配置：[docs/05-API-Key-配置说明.md](docs/05-API-Key-配置说明.md)。
 
-## 功能列表
+## 功能概要
 
-- **对话互通（重点）**：tab 栏「导出对话」将当前对话导出为 JSON（剪贴板 + 工作区），「导入对话」从文件或粘贴的 JSON 导入，在OVO内换模型继续聊，或与其他 AI 软件 A↔B 互通。见 [docs/13-对话互通.md](docs/13-对话互通.md)。
-- **多模型统一入口**：通过 LiteLLM 或页面「API 接入」使用 Grok、Claude、GPT、通义、DeepSeek、GLM、Kimi 等；会议模式多 AI 按序发言；单条回复可「转给 B」到另一模型。
-- **插件与自我拓展**：接入外部 AI 服务为插件；运行 AI 生成的 JS 拓展代码；与 Cursor 联动（导出状态/本机状态、从工作区加载代码）。见 [docs/08-插件接入与数据互通.md](docs/08-插件接入与数据互通.md)、[docs/11-与Cursor联动.md](docs/11-与Cursor联动.md)。
-- **国际/中国模型**：见 [docs/03-模型分组说明.md](docs/03-模型分组说明.md)。**最新 AI 技术亮点**：[highlights.html](highlights.html)。
+- **对话互通**：导出/导入 JSON，与其它 AI 软件 A↔B 互通。见 [docs/13-对话互通.md](docs/13-对话互通.md)。
+- **多模型**：通过 LiteLLM 或页面「API 接入」使用 Grok、Claude、GPT、通义、DeepSeek、GLM、Kimi 等；会议模式、单条「转给 B」等。
+- **插件与拓展**：[docs/08-插件接入与数据互通.md](docs/08-插件接入与数据互通.md)、[docs/11-与Cursor联动.md](docs/11-与Cursor联动.md)。
+- **模型分组**：[docs/03-模型分组说明.md](docs/03-模型分组说明.md)。可选浏览 [highlights.html](highlights.html)。
 
-## 项目结构
+## 项目结构（节选）
 
 ```
 ai软件集成/
-├── litellm/
-│   └── config.yaml          # LiteLLM 模型与密钥配置
-├── memory_store/
-│   └── chat_summaries.txt   # 对话总结（占位）
-├── scripts/
-│   └── append_summary.py    # 追加总结到 chat_summaries.txt
-├── docs/
-│   ├── 02-Open-WebUI-连接LiteLLM.md
-│   └── 03-模型分组说明.md
-├── highlights.html          # 最新技术亮点页（可关闭）
+├── litellm/config.yaml      # LiteLLM 配置
+├── memory_store/            # 对话总结占位等
+├── scripts/                 # 辅助脚本
+├── docs/                    # 文档
+├── index.html / server_with_proxy.py / desktop_app.py
+├── 启动.bat / 检查安装.bat
 └── README.md
 ```
 
-## 截图占位
-
-<!-- 可替换为仓库内截图路径 -->
-![聊天界面](docs/screenshot-chat.png)
-![设置连接](docs/screenshot-settings.png)
-
-## 社交发布文案模板（可复制到 B站 / X / 小红书 / CSDN）
-
-- **标题示例：** 用 Docker 搭了一个「永不遗忘」的网页版 AI 集成（Open WebUI + LiteLLM）
-- **正文示例：** 最近用 Open WebUI + LiteLLM 搭了个人用的多模型聊天入口，支持 Grok、Claude、GPT、通义、DeepSeek、智谱、Kimi，对话总结先用手动存本地，后面打算接记忆层。项目名OVO，仓库链接：[你的 GitHub 链接]。适合想自建、又不想写太多代码的同学。
-
-## 发布建议
-
-- **B站：** 标题带「Docker」「Open WebUI」「多模型」；简介里放 GitHub 链接与一句话功能说明；可录 1～2 分钟演示「添加连接 → 选模型 → 发测试提示词」。
-- **X (Twitter)：** 英文短句 + 仓库链接 + 标签 #OpenWebUI #LiteLLM #SelfHosted。
-- **小红书：** 标题突出「零代码」「网页版」「多模型」「国产模型」；正文 3～5 条要点 + 一张界面截图 + 仓库链接。
-- **CSDN：** 按「需求 → 环境 → 步骤 → 常见问题」写成教程，文末附仓库与一键命令。
-
 ---
 
-# OVO (English)
+## OVO (English)
 
-## Intro
+**OVO** is a web-based AI workstation with **Open WebUI** + **LiteLLM**: one entry for multiple LLMs, conversation export/import (JSON), optional plugins and Cursor integration.
 
-**OVO** (display name; packaged exe: `OVO.exe`) is a personal, web-based AI integration (MVP) using **Open WebUI** and **LiteLLM**, providing a single entry for multiple LLMs and self-configured API access.
+**Docker:** use the commands above; in Open WebUI set Base URL to `http://host.docker.internal:4000/v1` and API Key to `master_key` in `litellm/config.yaml`. See [docs/02-Open-WebUI-连接LiteLLM.md](docs/02-Open-WebUI-连接LiteLLM.md).
 
-## Quick start (Docker)
-
-See the Chinese section for `docker run` commands. Add connection in Open WebUI: Base URL `http://host.docker.internal:4000/v1`, API Key = `master_key` in `litellm/config.yaml` (e.g. `sk-1234`). See [docs/02-Open-WebUI-连接LiteLLM.md](docs/02-Open-WebUI-连接LiteLLM.md).
-
-## Features
-
-- One gateway for Grok, Claude, GPT, Qwen, DeepSeek, GLM, Kimi via LiteLLM.
-- International vs China models; China models tuned for Chinese and cost-effectiveness.
-- Conversation memory: placeholder (local file + `scripts/append_summary.py`); Mem0 or vector DB later.
-- Optional "Latest AI highlights" page ([highlights.html](highlights.html)), closable, links to official sites.
-
-## Screenshots
-
-![Chat](docs/screenshot-chat.png)
-![Settings](docs/screenshot-settings.png)
+**Features:** multi-model gateway, China/international model groups, conversation interoperability, optional [highlights.html](highlights.html).
