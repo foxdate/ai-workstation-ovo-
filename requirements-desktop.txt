@@ -8,6 +8,5 @@
 #   pip install pywebview[cef]
 # 安装后桌面版会使用 CEF 内嵌窗口。
 #
-# 若仍安装失败：可直接「启动.bat」选 2，程序会自动用默认浏览器打开页面，
-# 功能与内嵌窗口一致，仅窗口独立为浏览器标签。
+# 若仍安装失败：可在另一台环境用 build_exe.bat 生成 OVO.exe，或使用 pywebview[cef]。
 pywebview>=4.0

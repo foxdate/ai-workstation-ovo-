@@ -1,5 +1,5 @@
 @echo off
-chcp 65001 >nul
+REM ASCII-only: avoids CMD parse bugs with echo and parentheses on Chinese Windows.
 cd /d "%~dp0"
 
 set "PY_CMD="
@@ -20,25 +20,25 @@ if not defined PY_CMD (
 
 if not defined PY_CMD (
   echo.
-  echo [提示] 未检测到 Python。请先安装并勾选「Add python.exe to PATH」。
-  echo 下载: https://www.python.org/downloads/
+  echo ERROR: Python not found. Install Python 3.11+ and check "Add python.exe to PATH".
+  echo Download: https://www.python.org/downloads/
   echo.
-  set /p "open=是否用浏览器打开 Python 下载页？(Y/N): "
+  set /p "open=Open download page in browser? Y/N: "
   if /i "%open%"=="Y" start https://www.python.org/downloads/
   goto :end
 )
 
-echo 使用: %PY_CMD%
+echo Using: %PY_CMD%
 echo.
 %PY_CMD% 检查安装.py
 
 echo.
 echo ========================================
-echo   可选：桌面版内嵌窗口依赖 (pywebview)
+echo   Optional: pywebview for desktop window
 echo ========================================
-echo 仅用浏览器打开可不装。详见 docs\如何安装依赖.md
+echo Skip if you only use the browser. See docs\如何安装依赖.md
 echo.
-set /p "deps=是否尝试安装 pywebview？(Y/N): "
+set /p "deps=Install pywebview? Y/N: "
 if /i not "%deps%"=="Y" goto :end
 
 echo.
@@ -46,15 +46,15 @@ echo [1/2] pip install pywebview ...
 %PY_CMD% -m pip install pywebview
 if errorlevel 1 (
   echo.
-  echo [2/2] pip install pywebview[cef] ...
+  echo [2/2] pip install pywebview with CEF ...
   %PY_CMD% -m pip install "pywebview[cef]"
 )
 if errorlevel 1 (
   echo.
-  echo 安装未成功时可忽略，在「启动.bat」选 2 会用浏览器打开，功能相同。
+  echo Install failed - OK to skip. Launcher option 2 still opens browser.
 ) else (
   echo.
-  echo 已安装。可在「启动.bat」选 2 启动桌面版。
+  echo Done. Use launcher option 2 for desktop.
 )
 echo.
 

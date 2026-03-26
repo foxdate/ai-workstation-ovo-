@@ -17,7 +17,7 @@ api_key: "your-dashscope-api-key"
 api_key: "sk-xxxxxxxxxxxxxxxx"
 ```
 
-修改后**重启 LiteLLM** 才会生效：命令行执行 `docker restart litellm`，或 `docker stop litellm` 后重新「启动.bat」选 3。
+修改后**重启 LiteLLM** 才会生效：命令行执行 `docker restart litellm`，或 `docker stop litellm` 后重新「启动.bat」选 2。
 
 ## 其他模型（可选）
 

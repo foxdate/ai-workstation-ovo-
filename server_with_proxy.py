@@ -17,14 +17,29 @@ import base64
 PORT = int(os.environ.get("RECALLWEB_PORT", "8888"))
 LITELLM_URL = "http://127.0.0.1:4000"
 
+
+def _bundle_dir():
+    """Bundled assets: PyInstaller _MEIPASS when frozen, else project root."""
+    if getattr(sys, "frozen", False):
+        return getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(sys.executable)))
+    return os.path.dirname(os.path.abspath(__file__))
+
+
+def _user_data_dir():
+    """Writable config and workspace: next to exe when frozen, else project root."""
+    if getattr(sys, "frozen", False):
+        return os.path.dirname(os.path.abspath(sys.executable))
+    return os.path.dirname(os.path.abspath(__file__))
+
+
 def _api_config_path():
-    base = os.path.dirname(os.path.abspath(__file__))
+    base = _user_data_dir()
     return os.path.join(base, "api_config.json")
 
 
 def _workspace_dir():
     """OVO与 Cursor 等 IDE 联动：状态与拓展代码存放目录（项目内）。"""
-    base = os.path.dirname(os.path.abspath(__file__))
+    base = _user_data_dir()
     return os.path.join(base, "zhiquan_workspace")
 
 
@@ -290,11 +305,11 @@ def _comfyui_queue_and_collect(base_url, workflow, timeout_sec=600):
 
 def _project_root():
     """项目根目录（绝对路径），供工作站「在某某软件中打开」使用。"""
-    return os.path.dirname(os.path.abspath(__file__))
+    return _user_data_dir()
 
 
 def _integrated_apps_path():
-    base = os.path.dirname(os.path.abspath(__file__))
+    base = _bundle_dir()
     return os.path.join(base, "integrated_apps.json")
 
 class ProxyHandler(http.server.BaseHTTPRequestHandler):
@@ -396,7 +411,7 @@ class ProxyHandler(http.server.BaseHTTPRequestHandler):
     def _get_app_code(self):
         """返回本软件拓展相关代码/说明，供「创建拓展协助对话」作为附件发给 AI。"""
         try:
-            base = os.path.dirname(os.path.abspath(__file__))
+            base = _bundle_dir()
             doc_path = os.path.join(base, "docs", "09-自我拓展-API说明.md")
             if os.path.isfile(doc_path):
                 with open(doc_path, "r", encoding="utf-8") as f:
@@ -892,7 +907,7 @@ class ProxyHandler(http.server.BaseHTTPRequestHandler):
     def _collect_computer_state(self):
         """运行 Python 脚本采集本机状态，写入 zhiquan_workspace/computer_state.json。"""
         try:
-            base = os.path.dirname(os.path.abspath(__file__))
+            base = _bundle_dir()
             wdir = _workspace_dir()
             if not os.path.isdir(wdir):
                 os.makedirs(wdir, exist_ok=True)
@@ -1051,7 +1066,7 @@ class ProxyHandler(http.server.BaseHTTPRequestHandler):
         if not path.startswith("/"):
             path = "/" + path
         import os
-        base = os.path.dirname(os.path.abspath(__file__))
+        base = _bundle_dir()
         filepath = base + path.replace("/", os.sep)
         if os.path.isdir(filepath):
             filepath = os.path.join(filepath, "index.html")
@@ -1097,32 +1112,6 @@ def run_server(host="127.0.0.1", ports=None, port_holder=None):
 
 
 if __name__ == "__main__":
-    host = "127.0.0.1"
-    ports_to_try = [PORT, 9000]
-    for port in ports_to_try:
-        try:
-            server = http.server.HTTPServer((host, port), ProxyHandler)
-            print("OVO 本地服务已启动")
-            print("  请在浏览器打开: http://localhost:%s/" % port)
-            print("  或: http://127.0.0.1:%s/index.html" % port)
-            print("  API 代理: /api/v1 -> %s/v1" % LITELLM_URL)
-            print("  按 Ctrl+C 停止")
-            sys.stdout.flush()
-            sys.stderr.flush()
-            server.serve_forever()
-            break
-        except OSError as e:
-            err = str(e).lower()
-            if "address already in use" in err or (hasattr(e, "errno") and e.errno == 10048):
-                print("端口 %s 已被占用，尝试下一端口..." % port)
-                continue
-            print("启动失败: %s" % e, file=sys.stderr)
-            sys.exit(1)
-        except Exception as e:
-            print("启动失败: %s" % e, file=sys.stderr)
-            import traceback
-            traceback.print_exc()
-            sys.exit(1)
-    else:
-        print("端口 %s 和 9000 均被占用，请关闭占用程序后重试。" % PORT, file=sys.stderr)
-        sys.exit(1)
+    print("OVO 已改为仅桌面模式：本地服务由 desktop_app.py / OVO.exe 内嵌启动。", file=sys.stderr)
+    print("请运行: python desktop_app.py  或双击 dist\\OVO.exe", file=sys.stderr)
+    sys.exit(2)

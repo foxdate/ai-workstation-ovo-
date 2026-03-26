@@ -26,7 +26,7 @@ docker run -d -p 3000:8080 --name open-webui \
 ## 接入 API
 
 - **方式一（页面内）**：启动 OVO 后，在左侧栏 **「API 接入」** 填写 **API 地址**（如 `https://api.deepseek.com/v1`）和 **API Key**，点「保存」；模型列表从该接口拉取，对话走该 API。
-- **方式二（LiteLLM 网关）**：在 `litellm/config.yaml` 中配置各模型 `api_key`，运行「启动.bat」选 3 启动 LiteLLM，页面留空 API 地址即走本地代理。
+- **方式二（LiteLLM 网关）**：在 `litellm/config.yaml` 中配置各模型 `api_key`，运行「启动.bat」选 **2** 启动 LiteLLM，页面留空 API 地址即走本地代理。
 - **免费 API 来源**：[docs/免费API获取与接入.md](docs/免费API获取与接入.md)；Key 配置：[docs/05-API-Key-配置说明.md](docs/05-API-Key-配置说明.md)。
 
 ## 功能概要
@@ -36,6 +36,11 @@ docker run -d -p 3000:8080 --name open-webui \
 - **插件与拓展**：[docs/08-插件接入与数据互通.md](docs/08-插件接入与数据互通.md)、[docs/11-与Cursor联动.md](docs/11-与Cursor联动.md)。
 - **模型分组**：[docs/03-模型分组说明.md](docs/03-模型分组说明.md)。可选浏览 [highlights.html](highlights.html)。
 
+## 运行方式
+
+- **开发 / 源码运行**：双击 **启动.bat**，选 **1** 打开桌面窗口（需已 `pip install pywebview`）。选 **2** 启动 LiteLLM（Docker）。选 **3** 执行 **build_exe.bat** 生成 **`dist\OVO.exe`**。
+- **仅桌面**：不再提供「只开浏览器、不装 pywebview」模式；`python server_with_proxy.py` 会提示改用 `desktop_app.py` 或 exe。
+
 ## 项目结构（节选）
 
 ```
@@ -44,8 +49,9 @@ ai软件集成/
 ├── memory_store/            # 对话总结占位等
 ├── scripts/                 # 辅助脚本
 ├── docs/                    # 文档
-├── index.html / server_with_proxy.py / desktop_app.py
-├── 启动.bat / 检查安装.bat
+├── desktop_app.py / server_with_proxy.py / index.html
+├── 启动.bat / build_exe.bat / 检查安装.bat
+├── dist/OVO.exe             # 由 build_exe.bat 生成
 └── README.md
 ```
 
@@ -53,7 +59,7 @@ ai软件集成/
 
 ## OVO (English)
 
-**OVO** is a web-based AI workstation with **Open WebUI** + **LiteLLM**: one entry for multiple LLMs, conversation export/import (JSON), optional plugins and Cursor integration.
+**OVO** is a desktop AI workstation (pywebview) with **Open WebUI** + **LiteLLM**: one entry for multiple LLMs, conversation export/import (JSON), optional plugins and Cursor integration.
 
 **Docker:** use the commands above; in Open WebUI set Base URL to `http://host.docker.internal:4000/v1` and API Key to `master_key` in `litellm/config.yaml`. See [docs/02-Open-WebUI-连接LiteLLM.md](docs/02-Open-WebUI-连接LiteLLM.md).
 

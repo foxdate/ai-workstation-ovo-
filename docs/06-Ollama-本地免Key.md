@@ -27,8 +27,8 @@ ollama run phi3:mini
 ## 3. 使用OVO对话
 
 1. 确保 **Ollama 已安装且至少拉取过一个模型**（如上）。
-2. **先保持 Ollama 在运行**，再启动 **LiteLLM**：`启动.bat` 选 3。（若先开 LiteLLM 再开 Ollama，Ollama 类模型可能不出现，需关掉 LiteLLM 再重新运行一次。）
-3. 启动 **本地网页**：`启动.bat` 选 1，在浏览器打开提示的地址。
+2. **先保持 Ollama 在运行**，再启动 **LiteLLM**：`启动.bat` 选 2。（若先开 LiteLLM 再开 Ollama，Ollama 类模型可能不出现，需关掉 LiteLLM 再重新运行一次。）
+3. 启动 **OVO 桌面**：`启动.bat` 选 1，或双击 `dist\OVO.exe`。
 4. 在页面「当前模型」下拉框中选择出现的 Ollama 模型（仅显示 LiteLLM 已注册的模型）：
    - **Ollama Qwen2 7B (免 Key)**  
    - **Ollama Llama3.2 3B (免 Key)**  
@@ -38,6 +38,6 @@ ollama run phi3:mini
 ## 说明
 
 - LiteLLM 在 Docker 中通过 `host.docker.internal:11434` 访问你本机的 Ollama，无需改端口。
-- **顺序建议**：先启动 Ollama 并拉取模型，再启动 LiteLLM，这样下拉框里才会出现 Ollama 模型；若出现「Invalid model name」，请先 `docker stop litellm` 再重新「启动.bat」选 3。
+- **顺序建议**：先启动 Ollama 并拉取模型，再启动 LiteLLM，这样下拉框里才会出现 Ollama 模型；若出现「Invalid model name」，请先 `docker stop litellm` 再重新「启动.bat」选 2。
 - 若提示连不上，请确认 Ollama 已启动（任务栏或托盘有图标），且执行过至少一次 `ollama run 模型名`。
 - 更多模型见：https://ollama.com/library

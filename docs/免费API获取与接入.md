@@ -28,7 +28,7 @@
 
 - **说明**：本机运行开源模型，不经过外网、不消耗任何 API 额度。
 - **获取**：无需 API Key，安装 [Ollama](https://ollama.com) 后执行例如 `ollama run qwen2:7b` 拉取模型。
-- **在本项目中的使用**：先启动 Ollama，再「启动.bat」选 3，在页面选择 Ollama 模型即可。
+- **在本项目中的使用**：先启动 Ollama，再「启动.bat」选 2 启动 LiteLLM，再选 1 打开 OVO，在页面选择 Ollama 模型即可。
 - **详细步骤**：见 [06-Ollama-本地免Key](06-Ollama-本地免Key.md)。
 
 ---

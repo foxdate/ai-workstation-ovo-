@@ -92,9 +92,9 @@ def main():
     # 5. LiteLLM 端口 4000
     print("[5] LiteLLM 后端 (端口 4000)")
     if port_open("127.0.0.1", 4000):
-        print("    状态: 已就绪 (已启动 启动.bat 选 3 LiteLLM 或 Docker 容器)")
+        print("    状态: 已就绪 (已启动 启动.bat 选 2 LiteLLM 或 Docker 容器)")
     else:
-        print("    状态: 未检测到 (使用前请先运行 启动.bat 选 3 LiteLLM)")
+        print("    状态: 未检测到 (使用前请先运行 启动.bat 选 2 LiteLLM)")
     print()
 
     # 6. Ollama 端口 11434（免 Key 本地模型）
@@ -112,13 +112,13 @@ def main():
     elif port_open("127.0.0.1", 9000):
         print("    状态: 9000 已在使用 (本地服务可能已启动)")
     else:
-        print("    状态: 未启动 (使用前请运行 启动.bat 选 1 或 2)")
+        print("    状态: 未启动 (使用前请运行 启动.bat 选 1 打开桌面版)")
     print()
 
     print("=" * 50)
     if all_ok:
         print("  自检完成。必要项均通过，可按教程启动使用。")
-        print("  下一步: 运行「启动.bat」选 1（网页）或 2（桌面）打开 OVO。")
+        print("  下一步: 运行「启动.bat」选 1 打开 OVO 桌面。")
     else:
         print("  自检完成。请根据上方提示补全缺失项后再启动。")
         print("  未装 Python: 请阅读「首次安装指引.md」并安装 Python，勾选 Add to PATH。")

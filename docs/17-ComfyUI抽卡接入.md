@@ -4,19 +4,21 @@
 
 OVO后端提供 `POST /api/comfyui-generate`：
 
-1. 读取 `zhiquan_workspace/comfyui_api_workflow.json`（你在 ComfyUI 里导出的 **API Format** 工作流）
+1. 读取 `ovo_workspace/comfyui_api_workflow.json`（你在 ComfyUI 里导出的 **API Format** 工作流）
 2. 自动改写其中的 **正向/反向提示词**、**EmptyLatentImage** 的宽高与 `batch_size`、**KSampler** 的 `seed`（随机）
 3. 可选：在 **图片生成** 右侧填写 **固定短语（前缀/后缀）** 与主提示词合并；填写 **LoRA 文件名与强度** 时，会改写工作流中的 **LoraLoader / LoraLoaderModelOnly**（按节点 ID 顺序）；**ControlNet 参考图 + LoadImage 节点 ID** 时，由后端将图上传到 ComfyUI 并写入对应 **LoadImage**（需你在 ComfyUI 里已接好 ControlNet 链）
 4. 向本地 ComfyUI `POST /prompt` 提交，轮询 `/history` 后通过 `/view` 拉取图片
 5. 返回与 OpenAI 兼容的 `data[].b64_json`，供前端画廊展示
 
+**没有现成工作流时**：可先使用仓库内 **`comfyui_templates/sd15_basic_api.json`**（SD1.5 最简示例），复制为 `ovo_workspace/comfyui_api_workflow.json`，并把其中的 **`ckpt_name`** 改成你本机 `models/checkpoints` 里已有的文件名；搭建步骤说明见 **`comfyui_templates/README.md`**。
+
 ## 你需要做的步骤（概览）
 
-1. 在 ComfyUI 里用**当前能正常出图**的工作流（含 Z-Image / SDXL 等均可）。
+1. 在 ComfyUI 里用**当前能正常出图**的工作流（含 Z-Image / SDXL 等均可），或从 **`comfyui_templates/`** 复制模板并修改模型名。
 2. 菜单选择 **Save (API Format)**（或等价「保存为 API 格式」），保存为 JSON。
 3. 将该文件复制/重命名为：
 
-   `zhiquan_workspace/comfyui_api_workflow.json`
+   `ovo_workspace/comfyui_api_workflow.json`
 
 4. 启动 ComfyUI，在OVO「图片生成」页选择 ComfyUI 后端并生成。
 
@@ -54,7 +56,7 @@ OVO后端提供 `POST /api/comfyui-generate`：
 
 OVO项目根目录（例如你机器上的 `d:\ai软件集成`）下需要有：
 
-- 文件夹 **`zhiquan_workspace`**（若没有，请**新建**该文件夹）。
+- 文件夹 **`ovo_workspace`**（若没有，请**新建**该文件夹）。
 - 其内部放入文件，**文件名必须严格为**：
 
   **`comfyui_api_workflow.json`**
@@ -63,17 +65,17 @@ OVO项目根目录（例如你机器上的 `d:\ai软件集成`）下需要有：
 
 ```text
 d:\ai软件集成\
-  zhiquan_workspace\
+  ovo_workspace\
     comfyui_api_workflow.json    ← 把你导出的 API 内容放这里（可覆盖旧文件）
 ```
 
 **做法：**
 
 1. 复制你在第 3 步保存的 `.json` 文件。
-2. 粘贴到 `zhiquan_workspace` 文件夹中。
+2. 粘贴到 `ovo_workspace` 文件夹中。
 3. **重命名**为 `comfyui_api_workflow.json`（若已有同名文件，选择覆盖）。
 
-也可以：在资源管理器中直接**把导出的文件拖进 `zhiquan_workspace`**，再重命名。
+也可以：在资源管理器中直接**把导出的文件拖进 `ovo_workspace`**，再重命名。
 
 ### 5. 启动顺序
 
@@ -92,7 +94,7 @@ d:\ai软件集成\
 ### 7. 常见问题（方法一）
 
 - **菜单里始终没有 API 格式**：升级 ComfyUI 或打开设置里的 **开发模式 / API 相关选项**；仍没有则用 **方法二（脚本 + Network 抓 `/prompt`）** 代替。
-- **OVO仍报找不到文件**：确认路径是 `OVO项目根目录\zhiquan_workspace\comfyui_api_workflow.json`，不要多一层 `comfyui_api_workflow.json` 文件夹。
+- **OVO仍报找不到文件**：确认路径是 `OVO项目根目录\ovo_workspace\comfyui_api_workflow.json`，不要多一层 `comfyui_api_workflow.json` 文件夹。
 - **能生成但提示词不对**：见下文「自动修补规则」，OVO会按节点顺序改前两个 CLIP 文本等；若你工作流特殊，需要调整节点顺序或改工作流 JSON。
 
 ---
@@ -112,7 +114,7 @@ python scripts\install_comfyui_api_workflow.py path\to\payload.json
 .\scripts\install_comfyui_api_workflow.ps1 path\to\payload.json
 ```
 
-脚本会自动从 `{ "prompt": { ... } }` 中取出 `prompt`，写入 `zhiquan_workspace/comfyui_api_workflow.json`。可先 `--dry-run` 只做校验：
+脚本会自动从 `{ "prompt": { ... } }` 中取出 `prompt`，写入 `ovo_workspace/comfyui_api_workflow.json`。可先 `--dry-run` 只做校验：
 
 ```powershell
 python scripts\install_comfyui_api_workflow.py payload.json --dry-run
@@ -132,6 +134,6 @@ python scripts\install_comfyui_api_workflow.py payload.json --dry-run
 
 ## 常见问题
 
-- **400 未找到 comfyui_api_workflow.json**：先按上文导出并放到 `zhiquan_workspace/`。
+- **400 未找到 comfyui_api_workflow.json**：先按上文导出并放到 `ovo_workspace/`。
 - **超时 / 无图片**：确认 ComfyUI 能单独跑通同一工作流；检查输出节点（如 SaveImage）是否产生 `output` 类型图片。
 - **提示词未生效**：检查 API JSON 里正向/反向是否对应前两个 `CLIPTextEncode`（或带 `text` 的节点）。

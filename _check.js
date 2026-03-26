@@ -1366,9 +1366,9 @@
             renderMessages(conv.messages);
             var msg = err.message || '请求失败';
             if (msg === 'Failed to fetch' || msg.indexOf('NetworkError') !== -1) {
-              msg = '无法连接后端：请用「启动.bat」选 1 启动本地服务（带 API 代理），并确认 LiteLLM 已运行在 4000 端口。';
+              msg = '无法连接后端：请用「启动.bat」选 1 打开 OVO 桌面（带 API 代理），并确认 LiteLLM 已运行在 4000 端口。';
             } else if (msg.indexOf('Invalid model name') !== -1 || msg.indexOf('/v1/models') !== -1) {
-              msg = '当前模型未就绪。若为 Ollama：请先启动 Ollama 并拉取模型，再重启 LiteLLM（启动.bat 选 3）；或在下拉框中选择其他已就绪的模型。';
+              msg = '当前模型未就绪。若为 Ollama：请先启动 Ollama 并拉取模型，再重启 LiteLLM（启动.bat 选 2）；或在下拉框中选择其他已就绪的模型。';
             }
             showApiError(msg);
           })

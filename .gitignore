@@ -18,6 +18,7 @@ env/
 # 打包与构建产物
 dist/
 build/
+*.spec
 *.spec.bak
 
 # 环境变量与密钥文件（若后续使用）
